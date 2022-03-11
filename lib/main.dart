@@ -32,9 +32,10 @@ class MyApp extends StatelessWidget {
                     fontFamily: 'RobotoCondensed'
                   )
                 )),
-        home: Categories(),
+        initialRoute: '/',
         routes: {
-          '/category-meals': (ctx) => CategoryMeals()
+          '/': (ctx) => Categories(),
+          CategoryMeals.routes: (ctx) => CategoryMeals()
         });
   }
 }
