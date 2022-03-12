@@ -5,6 +5,7 @@ import 'package:nav_app/screens/category_meals.dart';
 import 'package:nav_app/screens/meal_detail.dart';
 
 import './screens/categories.dart';
+import 'screens/tabs.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
                 title: TextStyle(fontSize: 20, fontFamily: 'RobotoCondensed'))),
         initialRoute: '/',
         routes: {
-          '/': (ctx) => Categories(),
+          '/': (ctx) => Tabs(),
           CategoryMeals.routeName: (ctx) => CategoryMeals(),
           MealDetail.routeName: (ctx) => MealDetail()
         },
