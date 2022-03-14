@@ -11,8 +11,7 @@ class MealItem extends StatelessWidget {
   final Affordability affordability;
 
   MealItem(
-      {
-      required this.id,
+      {required this.id,
       required this.title,
       required this.imageUrl,
       required this.duration,
@@ -52,13 +51,19 @@ class MealItem extends StatelessWidget {
   }
 
   void selectMeal(BuildContext ctx) {
-    Navigator.of(ctx).pushNamed(MealDetail.routeName, arguments: id);
+    Navigator.of(ctx)
+        .pushNamed(
+      MealDetail.routeName,
+      arguments: id,
+    ).then((result) {
+      print(result);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: ()=> selectMeal(context),
+      onTap: () => selectMeal(context),
       child: Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
