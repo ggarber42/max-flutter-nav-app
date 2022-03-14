@@ -14,7 +14,7 @@ class CategoryMeals extends StatefulWidget {
 class _CategoryMealsState extends State<CategoryMeals> {
   String? categoryTitle;
   List<Meal>? displayedMeals;
-  var _loadedInitData = true;
+  var _loadedInitData = false;
 
   @override
   void initState() {
@@ -31,6 +31,7 @@ class _CategoryMealsState extends State<CategoryMeals> {
       displayedMeals = DUMMY_MEALS.where((meal) {
         return meal.categories.contains(categoryId);
       }).toList();
+      _loadedInitData = true;
       super.didChangeDependencies();
     }
   }
