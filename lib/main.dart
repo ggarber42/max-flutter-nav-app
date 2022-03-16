@@ -30,27 +30,45 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeals = [];
 
-  void _setFilters(Map<String, bool> filterData ){
+  void _setFilters(Map<String, bool> filterData) {
     setState(() {
       _filters = filterData;
 
-      _availableMeals = DUMMY_MEALS.where((meal){
-        if(_filters['gluten'] as bool && !meal.isGlutenFree){
+      _availableMeals = DUMMY_MEALS.where((meal) {
+        if (_filters['gluten'] as bool && !meal.isGlutenFree) {
           return false;
         }
-        if(_filters['vegan'] as bool && !meal.isVegan){
+        if (_filters['vegan'] as bool && !meal.isVegan) {
           return false;
         }
-        if(_filters['vegetarian'] as bool && !meal.isVegetarian){
+        if (_filters['vegetarian'] as bool && !meal.isVegetarian) {
           return false;
         }
-        if(_filters['lactose'] as bool && !meal.isLactoseFree){
+        if (_filters['lactose'] as bool && !meal.isLactoseFree) {
           return false;
         }
         return true;
       }).toList();
     });
+  }
+
+  void _toggleFavorite(String mealId) {
+    final existingIndex = _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeals.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteMeals.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  }
+
+  bool _isMealFavorite(String id){
+    return _favoriteMeals.any((meal) => meal.id == id);
   }
 
   @override
@@ -72,9 +90,9 @@ class _MyAppState extends State<MyApp> {
                 title: TextStyle(fontSize: 20, fontFamily: 'RobotoCondensed'))),
         initialRoute: '/',
         routes: {
-          '/': (ctx) => Tabs(),
+          '/': (ctx) => Tabs(_favoriteMeals),
           CategoryMeals.routeName: (ctx) => CategoryMeals(_availableMeals),
-          MealDetail.routeName: (ctx) => MealDetail(),
+          MealDetail.routeName: (ctx) => MealDetail(_toggleFavorite, _isMealFavorite),
           Filters.routeName: (ctx) => Filters(_filters, _setFilters)
         },
         onGenerateRoute: (settings) {
@@ -85,7 +103,8 @@ class _MyAppState extends State<MyApp> {
         },
         onUnknownRoute: (settings) {
           print(settings.arguments);
-          return MaterialPageRoute(builder: (ctx) => Categories()); // pagina 404
+          return MaterialPageRoute(
+              builder: (ctx) => Categories()); // pagina 404
         });
   }
 }

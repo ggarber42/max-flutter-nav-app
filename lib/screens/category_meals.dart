@@ -27,7 +27,7 @@ class _CategoryMealsState extends State<CategoryMeals> {
 
   @override
   void didChangeDependencies() {
-    if(!_loadedInitData){
+    if (!_loadedInitData) {
       final routeArgs =
           ModalRoute.of(context)!.settings.arguments as Map<String, String>;
       final categoryId = routeArgs['id'] as String;
@@ -55,13 +55,13 @@ class _CategoryMealsState extends State<CategoryMeals> {
       body: ListView.builder(
         itemBuilder: (ctx, index) {
           return MealItem(
-              id: displayedMeals![index].id,
-              title: displayedMeals![index].title,
-              imageUrl: displayedMeals![index].imageUrl,
-              duration: displayedMeals![index].duration,
-              complexity: displayedMeals![index].complexity,
-              affordability: displayedMeals![index].affordability,
-              removeItem: _removeMeal);
+            id: displayedMeals![index].id,
+            title: displayedMeals![index].title,
+            imageUrl: displayedMeals![index].imageUrl,
+            duration: displayedMeals![index].duration,
+            complexity: displayedMeals![index].complexity,
+            affordability: displayedMeals![index].affordability,
+          );
         },
         itemCount: displayedMeals!.length,
       ),
